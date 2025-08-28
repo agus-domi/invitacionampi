@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una Sorpresa Especial 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Contenedor del sobre */
+        .envelope-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            cursor: pointer;
+            animation: fadeInBounce 1.5s ease-out;
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Mensaje exterior */
+        .surprise-message {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px 30px;
+            border-radius: 20px;
+            font-size: 1.3em;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(231, 76, 60, 0.3);
+            position: relative;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(231, 76, 60, 0.3);
+            }
+            to {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 30px rgba(231, 76, 60, 0.6);
+            }
+        }
+
+        .surprise-message::before {
+            content: '✨';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            animation: sparkleRotate 2s linear infinite;
+        }
+
+        .surprise-message::after {
+            content: '✨';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            animation: sparkleRotate 2s linear infinite reverse;
+        }
+
+        @keyframes sparkleRotate {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Sobre mejorado */
+        .envelope {
+            position: relative;
+            width: 350px;
+            height: 240px;
+            transition: all 0.8s ease;
+            filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.4));
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-back {
+            background: linear-gradient(145deg, #fff5e6, #ffe4b3, #ffd480);
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #d4860f;
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.5), 
+                        inset 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .envelope-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+
+        /* Patrón de fondo del sobre */
+        .envelope-pattern {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 60%;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            border-radius: 50%;
+        }
+
+        .envelope-front {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(145deg, #e17055, #d63031, #b71c1c);
+            transform-origin: bottom;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px 12px 0 0;
+            z-index: 3;
+            border: 3px solid #b71c1c;
+            box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+                        0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .envelope-front::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 175px solid transparent;
+            border-right: 175px solid transparent;
+            border-bottom: 60px solid #b71c1c;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .envelope.opened .envelope-front {
+            transform: rotateX(-180deg);
+        }
+
+        .envelope-heart {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        .heart {
+            width: 40px;
+            height: 35px;
+            position: relative;
+            animation: heartbeat 1.8s ease-in-out infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 20px;
+            height: 32px;
+            position: absolute;
+            left: 20px;
+            top: 0;
+            background: linear-gradient(145deg, #ff6b9d, #e74c3c);
+            border-radius: 20px 20px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+        }
+
+        .envelope-decoration {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 20px;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9em;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
+        }
+
+        /* Invitación desplegada */
+        .invitation {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s ease;
+        }
+
+        .invitation.show {
+            opacity: 1;
+            transform: scale(1);
+            animation: unfold 1s ease-out;
+        }
+
+        @keyframes unfold {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(-90deg);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.75) rotateY(-45deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .hearts-decoration {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #e74c3c;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .title {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #34495e;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .event-info {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .event-info:hover {
+            transform: scale(1.05);
+        }
+
+        .band-name {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .date-venue {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+
+        .message {
+            color: #2c3e50;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .signature {
+            color: #e74c3c;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #f1c40f;
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .btn-accept {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-accept:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <!-- Sobre con mensaje exterior -->
+    <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+        <div class="surprise-message">
+            Tengo una sorpresa para vos<br><strong>Gordita (Ampi)</strong> 💕
+        </div>
+        
+        <div class="envelope">
+            <div class="envelope-back">
+                <div class="envelope-pattern"></div>
+                <div class="envelope-decoration">💌✨</div>
+            </div>
+            <div class="envelope-front"></div>
+            <div class="envelope-heart">
+                <div class="heart"></div>
+            </div>
+        </div>
+        
+        <div class="click-hint">👆 Hacé click para abrir</div>
+    </div>
+    
+    <!-- Invitación -->
+    <div class="invitation hidden" id="invitation">
+        <div class="hearts-decoration">💕 💖 💕</div>
+        
+        <h1 class="title">Una Invitación Especial</h1>
+        <p class="subtitle">Para la persona más importante de mi vida</p>
+        
+        <div class="event-info">
+            <div class="band-name">LOS HERRERA</div>
+            <div class="date-venue">📅 Viernes 29 de Agosto</div>
+            <div class="date-venue">📍 Coloso Banda Norte</div>
+        </div>
+        
+        <img src="losherrera.jpg" alt="Los Herrera" style="width:300px; margin-top:20px; border-radius:15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+        
+        <div class="message">
+            Mi gordita, quiero que te prepares y te pongas bonita para que
+            compartamos una noche especial llena de música y buenos momentos. 
+            Los Herrera vienen al coloso y no hay nadie más con quien prefiera estar que con vos. 
+            ¿Me acompañas a vivir esta experiencia juntos? 
+            Prometo que será una noche inolvidable. 💫
+        </div>
+        
+        <button class="btn-accept" onclick="acceptInvitation()">
+            ¡Por supuesto que sí! 💕
+        </button>
+        
+        <div class="signature">Con amor, Agus 💝</div>
+    </div>
+
+    <script>
+        // Crear brillos animados
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('sparkles').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Crear brillos cada 500ms
+        setInterval(createSparkle, 500);
+
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const invitation = document.getElementById('invitation');
+            
+            // Agregar clase opened solo al sobre interno
+            const envelopeBox = envelope.querySelector('.envelope');
+            envelopeBox.classList.add('opened');
+            
+            // Después de la animación del sobre, mostrar la invitación
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                invitation.classList.remove('hidden');
+                invitation.classList.add('show');
+                
+                // Crear más brillos cuando se abre
+                for(let i = 0; i < 15; i++) {
+                    setTimeout(createSparkle, i * 100);
+                }
+            }, 1200);
+        }
+
+        function acceptInvitation() {
+    // Crear muchos brillos para celebrar
+    for (let i = 0; i < 20; i++) {
+        setTimeout(createSparkle, i * 50);
+    }
+
+    // Mensaje personalizado para WhatsApp
+    const mensaje = "¡Sí mi amor! ¡Acepto tu invitación para ir a ver a Los Herrera! 💕🎵 Estoy súper emocionada, va a ser increíble pasar esa noche juntos. Te amo mucho Gordo 💖";
+    
+    // Reemplaza con tu número real con código de país (sin +, solo números)
+    const numeroWhatsApp = "5493585171610";
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    // Redirigir al WhatsApp
+    window.location.href = urlWhatsApp;
+}
+
+    </script>
+</body>
+</html>
